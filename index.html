@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="frame-ancestors *">
+  <title>Video</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+  ></video>
+  <script>
+    (function () {
+      var video = document.querySelector('video');
+      var file = 'output.mp4';
+      var rawUrl = 'https://github.com/warninglondo/2/raw/main/' + file;
+      var onGitHubViewer =
+        location.hostname === 'github.com' &&
+        location.pathname.indexOf('/blob/') !== -1;
+
+      video.src = onGitHubViewer ? rawUrl : file;
+      video.addEventListener('error', function () {
+        if (video.src.indexOf('/raw/main/') === -1) {
+          video.src = rawUrl;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
